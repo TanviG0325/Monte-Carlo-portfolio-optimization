@@ -1,17 +1,9 @@
-# =============================================================================
 # PROJECT 2: Python Portfolio Optimization + Monte Carlo Simulation
 # Tools: yfinance, numpy, pandas, matplotlib
-# Author: [Your Name]
-# =============================================================================
-# SETUP: Before running this file, install the required libraries.
-# Open your terminal and run:
-#   pip install yfinance numpy pandas matplotlib scipy
-# Then run this file with: python portfolio_optimization.py
-# =============================================================================
+# Author: tanvi 
 
 
 # --- STEP 1: IMPORT LIBRARIES ------------------------------------------------
-# Think of libraries as toolboxes. Each one gives us specific capabilities.
 
 import numpy as np                  # Numerical math (arrays, matrix operations)
 import pandas as pd                 # Data manipulation (like Excel in Python)
@@ -23,10 +15,7 @@ warnings.filterwarnings('ignore')   # Suppresses non-critical warning messages
 
 
 # =============================================================================
-# STEP 2: CHOOSE YOUR STOCKS
-# =============================================================================
-# Pick 8-12 stocks across different sectors. This is your investment universe.
-# You can change these tickers to anything you want to analyze.
+# STEP 2: CHOOSE  STOCKS
 
 TICKERS = [
     'AAPL',   # Apple          - Technology
@@ -56,7 +45,6 @@ FORECAST_DAYS = 252
 
 # =============================================================================
 # STEP 3: DOWNLOAD STOCK DATA
-# =============================================================================
 
 print("=" * 60)
 print("PORTFOLIO OPTIMIZATION + MONTE CARLO SIMULATION")
@@ -84,9 +72,8 @@ print(f"Date range: {prices.index[0].date()} to {prices.index[-1].date()}")
 
 # =============================================================================
 # STEP 4: CALCULATE DAILY RETURNS
-# =============================================================================
 # A "return" = (today's price - yesterday's price) / yesterday's price
-# pandas .pct_change() does this automatically for every stock at once
+# I used pandas .pct_change() which does this automatically for every stock at once
 
 daily_returns = prices.pct_change().dropna()
 
