@@ -1,9 +1,11 @@
-# PROJECT 2: Python Portfolio Optimization + Monte Carlo Simulation
+# Python Portfolio Optimization + Monte Carlo Simulation
 # Tools: yfinance, numpy, pandas, matplotlib
-# Author: tanvi 
+# Author: Tanvi Gandikota 
 
+# ---------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------
 
-# --- STEP 1: IMPORT LIBRARIES ------------------------------------------------
+#  STEP 1: IMPORT LIBRARIES 
 
 import numpy as np                  # Numerical math (arrays, matrix operations)
 import pandas as pd                 # Data manipulation (like Excel in Python)
@@ -13,8 +15,7 @@ import yfinance as yf               # Downloads free stock price data from Yahoo
 import warnings
 warnings.filterwarnings('ignore')   # Suppresses non-critical warning messages
 
-
-# =============================================================================
+# ---------------------------------------------------------------------------------------
 # STEP 2: CHOOSE  STOCKS
 
 TICKERS = [
@@ -42,8 +43,7 @@ NUM_SIMULATIONS = 1000
 # How many trading days to forecast (252 = 1 year)
 FORECAST_DAYS = 252
 
-
-# =============================================================================
+# ---------------------------------------------------------------------------------------
 # STEP 3: DOWNLOAD STOCK DATA
 
 print("=" * 60)
@@ -70,7 +70,7 @@ print(f"Data downloaded: {len(prices)} trading days, {len(prices.columns)} stock
 print(f"Date range: {prices.index[0].date()} to {prices.index[-1].date()}")
 
 
-# =============================================================================
+# ---------------------------------------------------------------------------------------
 # STEP 4: CALCULATE DAILY RETURNS
 # A "return" = (today's price - yesterday's price) / yesterday's price
 # I used pandas .pct_change() which does this automatically for every stock at once
@@ -90,9 +90,9 @@ stats_df = pd.DataFrame({
 print(stats_df.to_string())
 
 
-# =============================================================================
+# ---------------------------------------------------------------------------------------
 # STEP 5: COVARIANCE MATRIX
-# =============================================================================
+
 # The covariance matrix shows how stocks move together.
 # High covariance = they tend to go up/down at the same time (not ideal for diversification)
 # Low/negative covariance = they move independently (good for diversification)
@@ -100,9 +100,9 @@ print(stats_df.to_string())
 cov_matrix = daily_returns.cov() * 252   # Annualized covariance
 
 
-# =============================================================================
+# ---------------------------------------------------------------------------------------
 # STEP 6: SIMULATE RANDOM PORTFOLIOS (EFFICIENT FRONTIER)
-# =============================================================================
+
 # We'll try 10,000 random combinations of portfolio weights
 # For each combination, we calculate expected return, risk, and Sharpe Ratio
 
@@ -146,9 +146,8 @@ for i in range(NUM_PORTFOLIOS):
 print("Simulation complete.")
 
 
-# =============================================================================
+# ---------------------------------------------------------------------------------------
 # STEP 7: IDENTIFY KEY PORTFOLIOS
-# =============================================================================
 
 # Maximum Sharpe Ratio Portfolio — best risk-adjusted return
 max_sharpe_idx = np.argmax(port_sharpe)
@@ -183,9 +182,9 @@ for ticker, weight in zip(TICKERS, min_vol_weights):
         print(f"    {ticker:<8}: {weight*100:.2f}%")
 
 
-# =============================================================================
+# ---------------------------------------------------------------------------------------
 # STEP 8: MONTE CARLO SIMULATION
-# =============================================================================
+
 # Now we take the Max Sharpe portfolio and simulate 1,000 possible futures.
 # This helps us understand the range of outcomes (best case, worst case, likely case).
 
@@ -239,9 +238,9 @@ print(f"\n  VaR (95% confidence): There is a 5% chance of losing more than ${INI
 print(f"  VaR (99% confidence): There is a 1% chance of losing more than ${INITIAL_INVESTMENT - var_99:,.2f}")
 
 
-# =============================================================================
+# ---------------------------------------------------------------------------------------
 # STEP 9: CHARTS
-# =============================================================================
+
 print("\nGenerating charts...")
 
 fig = plt.figure(figsize=(18, 14))
@@ -315,9 +314,9 @@ plt.show()
 print("\nChart saved as 'portfolio_results.png'")
 
 
-# =============================================================================
+# ---------------------------------------------------------------------------------------
 # STEP 10: EXPORT RESULTS TO CSV (for your resume / portfolio writeup)
-# =============================================================================
+
 
 # Save the simulated portfolio data
 results_df = pd.DataFrame({
